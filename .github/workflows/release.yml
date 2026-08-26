@@ -182,18 +182,24 @@ jobs:
 
           mkdir -p AppDir/usr/bin
           mkdir -p AppDir/usr/share/applications
+          mkdir -p AppDir/usr/share/icons/hicolor/256x256/apps
+
 
           cp target/release/rust-dicom-station \
              AppDir/usr/bin/rust-dicom-station
+          
+          cp assets/rust-dicom-station.png \
+             AppDir/usr/share/icons/hicolor/256x256/apps/rust-dicom-station.png
 
           cat > AppDir/usr/share/applications/rust-dicom-station.desktop <<'EOF'
           [Desktop Entry]
           Type=Application
           Name=Rust DICOM Station
           Comment=DICOM / RT DICOM viewer
-          Exec=rust-dicom-station %F
+          Exec=rust-dicom-station
+          Icon=rust-dicom-station
           Terminal=false
-          Categories=Graphics;MedicalSoftware;
+          Categories=Graphics;
           EOF
 
           cat > AppDir/AppRun <<'EOF'
