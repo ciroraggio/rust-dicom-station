@@ -39,9 +39,7 @@ pub fn app_dir() -> PathBuf {
     std::env::current_exe()
         .ok()
         .and_then(|p| p.parent().map(Path::to_path_buf))
-        .unwrap_or_else(|| {
-            std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
-        })
+        .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")))
 }
 
 /// Return the platform-specific directory used for persistent application
@@ -194,12 +192,10 @@ pub fn save(s: &Settings) -> Result<()> {
     let path = settings_path();
 
     if let Some(parent) = path.parent() {
-        std::fs::create_dir_all(parent)
-            .with_context(|| format!("create {}", parent.display()))?;
+        std::fs::create_dir_all(parent).with_context(|| format!("create {}", parent.display()))?;
     }
 
-    std::fs::write(&path, render(s))
-        .with_context(|| format!("write {}", path.display()))
+    std::fs::write(&path, render(s)).with_context(|| format!("write {}", path.display()))
 }
 
 fn parse(text: &str) -> Settings {
