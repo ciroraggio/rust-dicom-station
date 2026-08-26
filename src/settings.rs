@@ -149,13 +149,8 @@ pub fn default_models_dir() -> PathBuf {
 
 /// Best-effort home directory lookup used only as a fallback for platforms
 /// where the relevant standard environment variable is not available.
+#[cfg(not(windows))]
 fn home_dir() -> Option<PathBuf> {
-    #[cfg(windows)]
-    {
-        std::env::var_os("USERPROFILE").map(PathBuf::from)
-    }
-
-    #[cfg(not(windows))]
     {
         std::env::var_os("HOME").map(PathBuf::from)
     }
